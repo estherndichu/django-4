@@ -8,7 +8,6 @@ class Neighborhood(models.Model):
     name = models.CharField(max_length=30)
     location = models.CharField(max_length=30)
     occupants = models.ForeignKey(User,on_delete=models.CASCADE)
-    admin = models.ForeignKey()
 
     def __str__(self):
         return f'{self.name}'
@@ -30,6 +29,3 @@ class Business(models.Model):
 
     def __str__(self):
         return self.name
-
-class Admin(admin.ModelAdmin):
-    fields = ('name','title')
