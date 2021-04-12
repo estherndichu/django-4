@@ -4,6 +4,9 @@ from .forms import NeighborhoodForm
 
 # Create your views here.
 def index(request):
+    return render(request,'vicinity/index.html')
+    
+def new_vicinity(request):
     if request.method == 'POST':
         form = NeighbourHoodForm(request.POST, request.FILES)
         if form.is_valid():
@@ -13,4 +16,5 @@ def index(request):
             return redirect('index')
     else:
         form = NeighbourHoodForm()
-    return render(request, 'vicinity/index.html', {'form': form})
+    return render(request, 'vicinity/vicinity.html', {'form': form})
+
