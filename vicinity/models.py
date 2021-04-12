@@ -12,6 +12,17 @@ class Neighborhood(models.Model):
     def __str__(self):
         return f'{self.name}'
 
+    def save_neighborhood(self):
+        self.save()
+
+    def delete_neighborhood(self):
+        self.delete()
+
+    @classmethod
+    def search_neighborhood(cls, neighborhood_id):
+        return cls.objects.filter(id=neighborhood_id)
+    
+
 class User(models.Model):
     user = models.OneToOneField(User,on_delete=models.CASCADE)
     name = models.CharField(max_length=50,blank=True)
@@ -36,3 +47,14 @@ class Business(models.Model):
 
     def __str__(self):
         return self.name
+
+    def save_business(self):
+        self.save()
+
+    def delete_business(self):
+        self.delete()
+
+    @classmethod
+    def search_business(cls, name):
+        return cls.objects.filter(name__icontains=name).all()
+    
