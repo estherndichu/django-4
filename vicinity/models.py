@@ -13,12 +13,19 @@ class Neighborhood(models.Model):
         return f'{self.name}'
 
 class User(models.Model):
-    name = models.OneToOneField(User,on_delete=models.CASCADE)
+    user = models.OneToOneField(User,on_delete=models.CASCADE)
+    name = models.CharField(max_length=50,blank=True)
     email = models.EmailField()
     hood = models.ForeignKey(Neighborhood,models.CASCADE)
 
     def __str__(self):
         return self.name.first_name
+
+def create_profile(sender,instance, created, **kwargs):
+    if created:
+        Profile.objects.create(user = instance)
+
+post_save.connect(create_profile, sender = User)        
 
 
 class Business(models.Model):
