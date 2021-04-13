@@ -10,7 +10,7 @@
              <h5>Create a new vicinity</h5>
              <form action="{% url 'new_vicinity' %}" method="post" enctype="multipart/form-data" novalidate>
                 {% csrf_token %}
-                {{bootstrap_form form|crispy }}
+                {{ form|crispy }}
                 <button class="btn btn-primary">Add Vicinity</button>
             </form>
          </div>

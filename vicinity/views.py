@@ -4,18 +4,27 @@ from .forms import NeighborhoodForm
 
 # Create your views here.
 def index(request):
-    vicinity = Neighborhood.objects.all()
-    return render(request,'hood/index.html',{'vicinity':vicinity})
-    
-def new_vicinity(request):
     if request.method == 'POST':
-        form = NeighbourHoodForm(request.POST, request.FILES)
+        form = NeighborhoodForm(request.POST, request.FILES)
         if form.is_valid():
             hood = form.save(commit=False)
             hood.save()
             return redirect('index')
     else:
-        form = NeighbourHoodForm()
+        form = NeighborhoodForm()
+
+    return render(request, 'hood/index.html', {'form': form})
+    
+def new_vicinity(request):
+    if request.method == 'POST':
+        form = NeighborhoodForm(request.POST, request.FILES)
+        if form.is_valid():
+            hood = form.save(commit=False)
+            hood.admin = request.user.profile
+            hood.save()
+            return redirect('index')
+    else:
+        form = NeighborhoodForm()
 
     return render(request, 'hood/new_vicinity.html', {'form': form})
 
@@ -46,13 +55,13 @@ def update_profile(request):
 
 
 def join(request, id):
-    neighbourhood = get_object_or_404(NeighbourHood, id=id)
-    request.user.profile.neighbourhood = neighbourhood
+    neighborhood = get_object_or_404(Neighborhood, id=id)
+    request.user.profile.neighbourhood = neighborhood
     request.user.profile.save()
     return redirect('index')
 
 def leave(request, id):
-    hood = get_object_or_404(NeighbourHood, id=id)
-    request.user.profile.neighbourhood = None
+    hood = get_object_or_404(Neighborhood, id=id)
+    request.user.profile.neighborhood = None
     request.user.profile.save()
     return redirect('index')    

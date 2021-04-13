@@ -19,7 +19,8 @@
         <div class="col-md-3"></div>
         <div class="col-md-6">
             <form action="{%url 'update_profile'%}" method="post" enctype="multipart/form-data">
-                {%csrf_token%} {% bootstrap_form form|crispy%}
+                {%csrf_token%} 
+                {%form|crispy%}
                 <input type="submit" class="btn btn-primary" value="Post">
             </form>
         </div>
