@@ -29,3 +29,17 @@ def profile(request):
         return redirect(update_profile)    
 
     return render(request, 'hood/profile.html', {"user_profile": user_profile},)
+
+
+def update_profile(request):
+    user = User.objects.get(username=username)
+    if request.method == 'POST':
+
+        form = ProfileForm(request.POST, request.FILES)
+        if form.is_valid(): 
+            form.save()
+        return redirect(profile)
+
+    else:
+        form = ProfileForm()
+    return render(request, 'hood/update_profile.html', {"form": form})    
