@@ -32,10 +32,10 @@ class Profile(models.Model):
     name = models.CharField(max_length=50,blank=True)
     email = models.EmailField()
     location =models.CharField(max_length=80)
-    hood = models.ForeignKey(Neighborhood,on_delete=models.CASCADE)
+    hood = models.ForeignKey(Neighborhood,on_delete=models.CASCADE, null=True,related_name='members', blank=True)
 
     def __str__(self):
-        return self.name.first_name
+        return self.name
 
 def create_profile(sender,instance, created, **kwargs):
     if created:
@@ -46,8 +46,8 @@ post_save.connect(create_profile, sender = User)
 
 class Business(models.Model):
     name = models.CharField(max_length=100)
-    user = models.ForeignKey(User,on_delete=models.CASCADE)
-    hood = models.ForeignKey(Neighborhood,on_delete=models.CASCADE)
+    user = models.ForeignKey(User,on_delete=models.CASCADE, related_name='owner')
+    hood = models.ForeignKey(Neighborhood,on_delete=models.CASCADE, related_name='business')
     email =models.EmailField()
 
     def __str__(self):
@@ -58,8 +58,4 @@ class Business(models.Model):
 
     def delete_business(self):
         self.delete()
-
-    @classmethod
-    def search_business(cls, name):
-        return cls.objects.filter(name__icontains=name).all()
     
