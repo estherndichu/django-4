@@ -7,7 +7,7 @@ from . import views
 
 urlpatterns = [
     url('',views.index,name='index'),
-    url('^new_vicinity/',views.new_vicinity),
+    url('^new_vicinity/',views.new_vicinity, name='new_vicinity'),
     url("^profile/", views.profile, name="profile"),
     url('^update_profile/$',views.update_profile,name = 'update_profile'),
 
