@@ -13,17 +13,19 @@
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" crossorigin="anonymous" />
   <link rel="stylesheet" href="{% static 'css/styles.css' %}" />
   <link href="https://fonts.googleapis.com/css?family=Cookie|Lato&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{% static 'css/styles.css' %}">
   {%endblock%}
 </head>
 
 <body class="text-center">
 
   {%block content%}
-  {%endblock%}
+  {%include 'navbar.html' %}
+  <div class="container-fluid">
+    <h4>Welcome to the vicinity!!</h4>
+  </div>
+  {% endblock %}
 
-  {%block scripts%}
-
-  {%endblock%}
 
 </body>
 

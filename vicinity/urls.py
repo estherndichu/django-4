@@ -6,7 +6,8 @@ from . import views
 
 
 urlpatterns = [
-    url('',views.index,name='index')
+    url('',views.index,name='index'),
+    url('^new_vicinity/',views.new_vicinity)
 ]
 
 if settings.DEBUG:
