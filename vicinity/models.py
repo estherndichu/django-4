@@ -7,10 +7,10 @@ from django.db.models.signals import post_save
 class Neighborhood(models.Model):
     name = models.CharField(max_length=30)
     location = models.CharField(max_length=30)
-    occupants = models.ForeignKey(User,on_delete=models.CASCADE)
-    admin = models.ForeignKey('Profile', on_delete=models.CASCADE)
+    admin = models.ForeignKey('Profile', on_delete=models.CASCADE, related_name='admin')
     health_hotline = models.IntegerField(blank=True, null=True)
     police_hotline = models.IntegerField(blank=True,null=True)
+    fire_hotline = models.IntegerField(blank=True, null=True)
 
     def __str__(self):
         return f'{self.name}'
@@ -27,11 +27,11 @@ class Neighborhood(models.Model):
     
 
 class Profile(models.Model):
-    user = models.OneToOneField(User,on_delete=models.CASCADE)
+    user = models.OneToOneField(User,on_delete=models.CASCADE, related_name='profile')
     name = models.CharField(max_length=50,blank=True)
     email = models.EmailField()
     location =models.CharField(max_length=80)
-    hood = models.ForeignKey(Neighborhood,on_delete=models.CASCADE, null=True,related_name='members', blank=True)
+    neighborhood = models.ForeignKey(Neighborhood,on_delete=models.SET_NULL, null=True,related_name='members', blank=True)
 
     def __str__(self):
         return self.name
