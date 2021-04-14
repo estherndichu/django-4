@@ -12,6 +12,7 @@ urlpatterns = [
     url('^update_profile/',views.update_profile,name = 'update_profile'),
     url('join/<id>', views.join, name='join'),
     url('leave/<id>', views.leave, name='leave'),
+    url('single_hood/<hood_id>', views.single_hood, name='single-hood'),
 ]
 
 if settings.DEBUG:
