@@ -1,4 +1,4 @@
-{%extends 'projects/base.html'%}
+{%extends 'hood/base.html'%}
 {% block content %}
 {{block.super}}
 
@@ -7,9 +7,9 @@
     <div class="col-md-8">
       <div class="card-body">
         <h5 class="card-title">{{request.user}}'s Profile</h5>
-        <p class="card-text-text-muted">Bio :{{user_profile.bio}}</p>
+        <p class="card-text-text-muted">Location :{{user_profile.location}}</p>
         <p class="card-text">Email :{{user_profile.email}}</p>
-        <p class="card-text">Username :{{request.user}}</p>
+        <p class="card-text">Name :{{user_profile.name}}</p>
 
       </div>
     </div>

@@ -6,10 +6,10 @@ from . import views
 
 
 urlpatterns = [
-    url('',views.index,name='index'),
+    url('^$',views.index,name='index'),
     url('^new_vicinity/',views.new_vicinity, name='new_vicinity'),
     url("^profile/", views.profile, name="profile"),
-    url('^update_profile/$',views.update_profile,name = 'update_profile'),
+    url('^update_profile/',views.update_profile,name = 'update_profile'),
     url('join/<id>', views.join, name='join'),
     url('leave/<id>', views.leave, name='leave'),
 ]
