@@ -1,6 +1,6 @@
 from django.shortcuts import render,redirect, get_object_or_404
 from .models import Neighborhood, Profile, Business
-from .forms import NeighborhoodForm,ProfileForm
+from .forms import NeighborhoodForm,ProfileForm, BusinessForm
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
@@ -58,7 +58,7 @@ def update_profile(request):
 
 def join(request, id):
     neighborhood = get_object_or_404(Neighborhood, id=id)
-    request.user.profile.neighbourhood = neighborhood
+    request.user.profile.neighborhood = neighborhood
     request.user.profile.save()
     return redirect('index')
 
@@ -70,4 +70,16 @@ def leave(request, id):
 
 def single_hood(request, hood_id):
     hood = Neighborhood.objects.get(id=hood_id)
-    return render(request,'hood/single.html',{'hood':hood})    
+    return render(request,'hood/single.html',{'hood':hood})   
+
+@login_required()
+def business(request):
+    current_user = request.user
+    if request.method == 'POST':
+        form = BusinessForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+        return redirect('single_hood')
+    else:
+        form = BusinessForm(auto_id=False)
+    return render(request, 'hood/business.html', {"form": form})     

@@ -57,4 +57,5 @@ class Business(models.Model):
 
     def delete_business(self):
         self.delete()
+
     
