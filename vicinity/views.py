@@ -70,7 +70,7 @@ def leave(request, id):
 
 def single_hood(request, hood_id):
     hood = Neighborhood.objects.get(id=hood_id)
-    business = Business.objects.filter(neighborhood = hood)
+    business = Business.objects.filter(hood = hood)
     posts = Post.objects.filter(hood=hood)
     return render(request,'hood/single.html',{'hood':hood})   
 
@@ -99,7 +99,7 @@ def post(request):
             title.author = current_user
             title.hood = hood
             title.save()
-            return redirect('/notices/')
+            return redirect('single_hood')
     else:
         form = PostNotice(auto_id=False)
     return render(request, 'hood/post.html', {'posts':posts, "form": form})      
