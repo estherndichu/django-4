@@ -70,6 +70,8 @@ def leave(request, id):
 
 def single_hood(request, hood_id):
     hood = Neighborhood.objects.get(id=hood_id)
+    business = Business.objects.filter(neighborhood = hood)
+    posts = Post.objects.filter(hood=hood)
     return render(request,'hood/single.html',{'hood':hood})   
 
 @login_required()
