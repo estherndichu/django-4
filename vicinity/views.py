@@ -1,6 +1,6 @@
 from django.shortcuts import render,redirect, get_object_or_404
-from .models import Neighborhood, Profile, Business
-from .forms import NeighborhoodForm,ProfileForm, BusinessForm
+from .models import Neighborhood, Profile, Business, Post
+from .forms import NeighborhoodForm,ProfileForm, BusinessForm,PostForm
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
@@ -82,4 +82,22 @@ def business(request):
         return redirect('single_hood')
     else:
         form = BusinessForm(auto_id=False)
-    return render(request, 'hood/business.html', {"form": form})     
+    return render(request, 'hood/business.html', {"form": form})   
+
+@login_required()
+def post(request):
+    user = Profile.objects.get(user=request.user.id)
+    posts = Post.objects.all().filter(hood=user.hood)
+    current_user = request.user
+    if request.method == 'POST':
+        hood = Hood.objects.get(name=user.hood)
+        form = PostForm(request.POST, request.FILES)
+        if form.is_valid():
+            title = form.save(commit=False)
+            title.author = current_user
+            title.hood = hood
+            title.save()
+            return redirect('/notices/')
+    else:
+        form = PostNotice(auto_id=False)
+    return render(request, 'hood/post.html', {'posts':posts, "form": form})      

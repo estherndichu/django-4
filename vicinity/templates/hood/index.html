@@ -8,7 +8,7 @@
         {% for vicinity in vicinity %}
         <div class="col-md-4">
             <div class="card">
-                <p>{{vicinity.name}}</p>
+                <p><a href="{% url 'single_hood' hood_id %}">{{vicinity.name}}</a></p>
                 
             </div>
         </div>
