@@ -6,15 +6,14 @@ from . import views
 from django.urls import path
 
 urlpatterns = [
-    path('',views.index,name='index'),
-    path('new_vicinity/',views.new_vicinity, name='new_vicinity'),
-    path("profile/", views.profile, name="profile"),
-    path('update_profile/',views.update_profile,name = 'update_profile'),
-    path('join/<id>', views.join, name='join'),
-    path('leave/<id>', views.leave, name='leave'),
-    path('single_hood/<hood_id>', views.single_hood, name='single_hood'),
-    path('business/', views.business, name='business'),
-    path('post/', views.post, name='post')
+    url('^$',views.index,name='index'),
+    url('new_vicinity/',views.new_vicinity, name='new_vicinity'),
+    url("profile/", views.profile, name="profile"),
+    url('update_profile/',views.update_profile,name = 'update_profile'),
+    url('join/(\d+)', views.join, name='join'),
+    url('leave/(\d+)', views.leave, name='leave'),
+    url('single_hood/(\d+)', views.single_hood, name='single_hood'),
+    url('post/', views.post, name='post')
 ]
 
 if settings.DEBUG:

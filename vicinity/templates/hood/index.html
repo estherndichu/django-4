@@ -8,11 +8,12 @@
         {% for vicinity in vicinity %}
         <div class="col-md-4">
             <div class="card">
-                <p>{{vicinity.name}}</p>
-                {% if request.user.profile.neighborhood == hood %}
-                    <a href="{% url 'leave' hood.id %}" class="btn btn-outline-danger btn-sm">Leave Hood</a>
+                <h3 class="text-center">{{vicinity.name}}</h3>
+                <p>{{vicinity.description}}</p>
+                {% if request.user.profile.neighborhood %}
+                    <a href="{% url 'leave' vicinity.id %}" class="btn btn-outline-danger btn-sm">Leave Hood</a>
                     {% elif not request.user.profile.neighborhood %}
-                    <a href="{% url 'join' hood.id %}" class="btn btn-primary btn-sm">Join Hood</a>
+                    <a href="{% url 'join' vicinity.id %}" class="btn btn-primary btn-sm">Join Hood</a>
                     {% endif %}
                 
             </div>

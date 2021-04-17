@@ -6,6 +6,7 @@ from django.db.models.signals import post_save
 
 class Neighborhood(models.Model):
     name = models.CharField(max_length=30)
+    description = models.TextField()
     location = models.CharField(max_length=30)
     admin = models.ForeignKey('Profile', on_delete=models.CASCADE, related_name='admin')
     health_hotline = models.IntegerField(blank=True, null=True)
@@ -13,7 +14,7 @@ class Neighborhood(models.Model):
     fire_hotline = models.IntegerField(blank=True, null=True)
 
     def __str__(self):
-        return f'{self.name}'
+        return self.name
 
     def save_neighborhood(self):
         self.save()
@@ -45,6 +46,7 @@ post_save.connect(create_profile, sender = User)
 
 class Business(models.Model):
     name = models.CharField(max_length=100)
+    address = models.CharField(max_length=100)
     user = models.ForeignKey(User,on_delete=models.CASCADE, related_name='owner')
     hood = models.ForeignKey(Neighborhood,on_delete=models.CASCADE, related_name='business')
     email =models.EmailField()
@@ -65,4 +67,4 @@ class Post(models.Model):
     hood = models.ForeignKey(Neighborhood, on_delete=models.CASCADE)
 
     def __str__(self):
-        return f'{self.title}'
+        return self.title

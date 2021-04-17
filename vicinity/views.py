@@ -72,27 +72,25 @@ def single_hood(request, hood_id):
     hood = Neighborhood.objects.get(id=hood_id)
     business = Business.objects.filter(hood = hood)
     posts = Post.objects.filter(hood=hood)
-    return render(request,'hood/single.html',{'hood':hood})   
-
-@login_required()
-def business(request):
-    current_user = request.user
     if request.method == 'POST':
         form = BusinessForm(request.POST, request.FILES)
         if form.is_valid():
-            form.save()
+            biz = form.save(commit=False)
+            biz.user = current_user
+            biz.hood = hood
+            biz.save()
         return redirect('single_hood')
     else:
         form = BusinessForm(auto_id=False)
-    return render(request, 'hood/business.html', {"form": form})   
+    return render(request,'hood/single.html',{'hood':hood})   
 
 @login_required()
 def post(request):
     user = Profile.objects.get(user=request.user.id)
-    posts = Post.objects.all().filter(hood=user.hood)
+    posts = Post.objects.all().filter(hood=user.neighborhood)
     current_user = request.user
     if request.method == 'POST':
-        hood = Hood.objects.get(name=user.hood)
+        hood = Neighborhood.objects.get(name=user.neighborhood)
         form = PostForm(request.POST, request.FILES)
         if form.is_valid():
             title = form.save(commit=False)
@@ -101,5 +99,5 @@ def post(request):
             title.save()
             return redirect('single_hood')
     else:
-        form = PostNotice(auto_id=False)
+        form = PostForm
     return render(request, 'hood/post.html', {'posts':posts, "form": form})      
