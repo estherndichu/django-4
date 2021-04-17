@@ -10,7 +10,8 @@ from django.contrib.auth.models import User
 def index(request):
     vicinity = Neighborhood.objects.all()
     return render(request,'hood/index.html',{'vicinity':vicinity})
-    
+
+@login_required(login_url='/accounts/login/')   
 def new_vicinity(request):
     if request.method == 'POST':
         form = NeighborhoodForm(request.POST, request.FILES)
@@ -24,6 +25,7 @@ def new_vicinity(request):
 
     return render(request, 'hood/new_vicinity.html', {'form': form})
 
+@login_required(login_url='/accounts/login/')
 def profile(request):
     current_user_id = request.user.id
     user_profile = Profile.objects.get(user_id=current_user_id)
@@ -35,7 +37,7 @@ def profile(request):
 
     return render(request, 'hood/profile.html', {"user_profile": user_profile},)
 
-
+@login_required(login_url='/accounts/login/')
 def update_profile(request):
     current_user_id = request.user.id
     user_profile = Profile.objects.get(user_id=current_user_id)
@@ -55,26 +57,28 @@ def update_profile(request):
         form = ProfileForm()
     return render(request, 'hood/update_profile.html', {"form": form})    
 
-
+@login_required(login_url='/accounts/login/')
 def join(request, id):
     neighborhood = get_object_or_404(Neighborhood, id=id)
     request.user.profile.neighborhood = neighborhood
     request.user.profile.save()
     return redirect('index')
 
+@login_required(login_url='/accounts/login/')
 def leave(request, id):
     hood = get_object_or_404(Neighborhood, id=id)
     request.user.profile.neighborhood = None
     request.user.profile.save()
     return redirect('index')    
 
+@login_required(login_url='/accounts/login/')
 def single_hood(request, hood_id):
     hood = Neighborhood.objects.get(id=hood_id)
     business = Business.objects.filter(hood = hood)
     posts = Post.objects.filter(hood=hood)
     return render(request,'hood/single.html',{'hood':hood, 'business':business, 'posts':posts})   
 
-@login_required()
+@login_required(login_url='/accounts/login/')
 def business(request,hood_id):
     hood = Neighborhood.objects.get(id=hood_id)
     current_user = request.user
@@ -90,7 +94,7 @@ def business(request,hood_id):
         form = BusinessForm(auto_id=False)
     return render(request, 'hood/business.html', {"form": form})     
 
-@login_required()
+@login_required(login_url='/accounts/login/')
 def post(request):
     user = Profile.objects.get(user=request.user.id)
     posts = Post.objects.all().filter(hood=user.neighborhood)
