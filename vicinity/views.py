@@ -51,7 +51,7 @@ def update_profile(request):
             user_profile.location = form.cleaned_data.get('location')
 
             user_profile.save()
-        return redirect(profile)
+        return redirect('profile')
 
     else:
         form = ProfileForm()
