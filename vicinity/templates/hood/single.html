@@ -1,28 +1,50 @@
 {% extends 'hood/base.html' %}
 {% load bootstrap4 %}
 
+{% block content %}
 <div class="container">
     <div class="row">
         <div class="col-md-2"></div>
         <div class="col-md-8">
-            <p><a href="{% url 'business'%}">ADD BUSINESS</a></p>
-            <h4 class="text-center">{{hood.name}}</h4>
-            <div class="row">
-                <div class="col-md-6">
-                    <h5>Emergency numbers</h5>
-                    <ul>
-                        <ol>Police Hotline : {{hood.police_hotline}}</ol>
-                        <ol>Health Hotline : {{hood.health_hotline}}</ol>
-                        <ol>Fire Department : {{hood.fire_hotline}}</ol>
-                    </ul>
+            <div class="card">
+                
+                <h2 class="text-center">{{hood.name}}</h2>
+                <div class="row">
+                    <div class="col-md-6">
+                        <h5>Emergency numbers</h5>
+                        <ul>
+                            <ol>Police Hotline : {{hood.police_hotline}}</ol>
+                            <ol>Health Hotline : {{hood.health_hotline}}</ol>
+                            <ol>Fire Department : {{hood.fire_hotline}}</ol>
+                        </ul>
+                    </div>
+                    <div class="col-md-6">
+                        
+                        <h5>Businesses available</h5>
+                        {% for business in business %}
+                        <div class="card" style="margin-top: 10px;">
+                            <h5>{{business.name}}</h5>
+                            <p>{{business.address}}</p>
+                            <small>{{business.email}}</small>
+                        </div>
+                        {% endfor %}
+                        <p><a href="{% url 'business' hood.id %}">ADD BUSINESS</a></p>
+                    </div>
                 </div>
-                <div class="col-md-6">
-                    <h5>Businesses available</h5>
+
+                <h3>POSTS</h3>
+                <h5><a href="{% url 'post' %} ">Add Post</a></h5>
+                {% for post in posts %}
+                <div class="card" style="margin-top: 10px;">
+                    <h4>{{post.title}}</h4>
+                    <p>{{post.details}}</p>
                 </div>
             </div>
-            
-            <h3>POSTS</h3>
+
+
+            {% endfor %}
         </div>
         <div class="col-md-2"></div>
     </div>
 </div>
+{% endblock %}

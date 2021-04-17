@@ -4,11 +4,12 @@
 
 {% block content %}
 <div class="container" style="margin-top: 150px;">
+    <h1 >Available Neighborhoods</h1>
     <div class="row">
         {% for vicinity in vicinity %}
         <div class="col-md-4">
             <div class="card">
-                <h3 class="text-center">{{vicinity.name}}</h3>
+                <h3 class="text-center"><a href="{%url 'single_hood' vicinity.id %} ">{{vicinity.name}}, {{vicinity.location}}</a></h3>
                 <p>{{vicinity.description}}</p>
                 {% if request.user.profile.neighborhood %}
                     <a href="{% url 'leave' vicinity.id %}" class="btn btn-outline-danger btn-sm">Leave Hood</a>

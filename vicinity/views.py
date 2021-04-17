@@ -72,6 +72,12 @@ def single_hood(request, hood_id):
     hood = Neighborhood.objects.get(id=hood_id)
     business = Business.objects.filter(hood = hood)
     posts = Post.objects.filter(hood=hood)
+    return render(request,'hood/single.html',{'hood':hood, 'business':business, 'posts':posts})   
+
+@login_required()
+def business(request,hood_id):
+    hood = Neighborhood.objects.get(id=hood_id)
+    current_user = request.user
     if request.method == 'POST':
         form = BusinessForm(request.POST, request.FILES)
         if form.is_valid():
@@ -79,10 +85,10 @@ def single_hood(request, hood_id):
             biz.user = current_user
             biz.hood = hood
             biz.save()
-        return redirect('single_hood')
+        return redirect('single_hood', hood.id)
     else:
         form = BusinessForm(auto_id=False)
-    return render(request,'hood/single.html',{'hood':hood})   
+    return render(request, 'hood/business.html', {"form": form})     
 
 @login_required()
 def post(request):
@@ -97,7 +103,7 @@ def post(request):
             title.author = current_user
             title.hood = hood
             title.save()
-            return redirect('single_hood')
+            return redirect('single_hood', hood.id)
     else:
         form = PostForm
     return render(request, 'hood/post.html', {'posts':posts, "form": form})      

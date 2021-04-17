@@ -13,6 +13,7 @@ urlpatterns = [
     url('join/(\d+)', views.join, name='join'),
     url('leave/(\d+)', views.leave, name='leave'),
     url('single_hood/(\d+)', views.single_hood, name='single_hood'),
+    url('business/(\d+)', views.business, name='business'),
     url('post/', views.post, name='post')
 ]
 
