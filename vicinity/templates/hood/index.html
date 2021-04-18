@@ -14,7 +14,7 @@
             <div class="card" style="margin-bottom: 20px;">
                 <h3 class="text-center"><a href="{%url 'single_hood' vicinity.id %} ">{{vicinity.name}}, {{vicinity.location}}</a></h3>
                 <p>{{vicinity.description}}</p>
-                {% if request.user.profile.neighborhood %}
+                {% if request.user.profile.neighborhood == vicinity %}
                     <a href="{% url 'leave' vicinity.id %}" class="btn btn-outline-danger btn-sm">Leave Hood</a>
                     {% elif not request.user.profile.neighborhood %}
                     <a href="{% url 'join' vicinity.id %}" class="btn btn-primary btn-sm">Join Hood</a>

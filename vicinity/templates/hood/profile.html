@@ -6,10 +6,12 @@
   <div class="row">
     <div class="col-md-8">
       <div class="card-body">
-        <h5 class="card-title">{{request.user}}'s Profile</h5>
-        <p class="card-text-text-muted">Location :{{user_profile.location}}</p>
-        <p class="card-text">Email :{{user_profile.email}}</p>
-        <p class="card-text">Name :{{user_profile.name}}</p>
+        <h5 class="card-title">{{request.user | capfirst}}'s Profile</h5>
+        <p class="card-text">Name : {{request.user | capfirst}}</p>
+        <p class="card-text-text-muted">Location : {{user_profile.location}}</p>
+        <p class="card-text">Neighborhood : {{user_profile.neighborhood}}</p>        
+        <p class="card-text">Email : {{user_profile.email}}</p>
+        
 
       </div>
     </div>

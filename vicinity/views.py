@@ -33,29 +33,9 @@ def profile(request):
     try:
         profile = Profile.objects.get(user_id=current_user_id)
     except Profile.DoesNotExist:
-        return redirect(update_profile)    
+        return redirect('update_profile')    
 
     return render(request, 'hood/profile.html', {"user_profile": user_profile},)
-
-@login_required(login_url='/accounts/login/')
-def update_profile(request):
-    current_user_id = request.user.id
-    user_profile = Profile.objects.get(user_id=current_user_id)
-    if request.method == 'POST':
-
-        form = ProfileForm(request.POST, request.FILES)
-        if form.is_valid(): 
-
-            user_profile.name = form.cleaned_data.get('name')
-            user_profile.email = form.cleaned_data.get('email')
-            user_profile.location = form.cleaned_data.get('location')
-
-            user_profile.save()
-        return redirect('profile')
-
-    else:
-        form = ProfileForm()
-    return render(request, 'hood/update_profile.html', {"form": form})    
 
 @login_required(login_url='/accounts/login/')
 def join(request, id):
